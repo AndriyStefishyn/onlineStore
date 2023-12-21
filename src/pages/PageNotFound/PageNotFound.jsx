@@ -2,7 +2,7 @@
 export const PageNotFound =() => {
 
     return (
-        <div>
+        <div >
             Error 404
             PageNotFound 
         </div>

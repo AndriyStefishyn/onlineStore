@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { PageNotFound } from "../components/PageNotFound";
+import { PageNotFound } from "../pages/PageNotFound";
 export const NavigationContainer = () => {
   return (
     <>

@@ -4,6 +4,7 @@ import { api } from "./api";
 import { NavBar } from "./components/Menu";
 
 
+
 function App() {
   type Product = {
     id: number;
@@ -20,7 +21,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("https://fakestoreapi.com/products"); // Replace with your API endpoint
+        const response = await api.get("/products"); 
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,6 +37,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+    
       <div>
         {loading ? (
           <p>Loading...</p>
