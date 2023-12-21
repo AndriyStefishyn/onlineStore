@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
-import { NavigationContainer } from "./navigation";
 import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -12,8 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-     <NavigationContainer />
-      <App /> 
+      <App />
     </React.StrictMode>
   </BrowserRouter>
 );
