@@ -1,5 +1,5 @@
 import * as React from "react";
- export const LoadingSvg = (props) => (
+ export const LoadingSvg = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={200}
@@ -8,11 +8,17 @@ import * as React from "react";
     style={{
       margin: "auto",
       background: "#fff",
-      display: "block",
+      display: "flex",
+      justifyContent:"center",
+      alignItems: "center",
       shapeRendering: "auto",
+      width:"100vw",
+      height:"100vh",
+
     }}
+    
     viewBox="0 0 100 100"
-    {...props}
+  
   >
     <circle cx={50} cy={50} r={0} fill="none" stroke="#e90c59" strokeWidth={2}>
       <animate
