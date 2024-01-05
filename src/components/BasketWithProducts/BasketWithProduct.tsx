@@ -1,9 +1,10 @@
 import { ProductType } from "../../types";
 import { CloseSvg } from "../../svg";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-
+import { removeProduct } from "../../store/slice/productSlice";
+import { RemoveSvg } from "../../svg/RemoveSvg";
 type BasketProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
@@ -13,8 +14,11 @@ export const BasketWithProducts: React.FC<BasketProps> = ({
   setIsOpen,
   isOpen,
 }) => {
+  const dispatch = useDispatch();
   const [gruopedProducts, setGroupedProducts] = useState<ProductType[]>([]);
-const selectedProduct = useSelector((state:RootState)=>state.product.values)
+  const selectedProduct = useSelector(
+    (state: RootState) => state.product.values
+  );
   useEffect(() => {
     const productsMap: { [key: number]: number } = {};
     selectedProduct.forEach((product) => {
@@ -24,7 +28,6 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
         productsMap[product.id] += 1;
       }
     });
-    console.log(productsMap);
     const usedProductsIds: Array<number> = [];
     const newGroupedProducts = selectedProduct
       .map((product) => {
@@ -32,7 +35,7 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
         return {
           ...product,
           price: product.price * countOfProducts,
-          count: countOfProducts > 1 ? `(${countOfProducts})` : "",
+          count: countOfProducts > 1 ? ` x${countOfProducts} ` : "",
         };
       })
       .filter((product) => {
@@ -46,10 +49,14 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
   }, [selectedProduct]);
   const handleClick = () => {};
 
+  const deleteProduct = (product: ProductType) => {
+    dispatch(removeProduct(product));
+  };
+
   return (
     <div
-      className={`h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-scroll transition-w duration-500 ease-in-out ${
-        isOpen ? "w-[400px]" : "w-0"
+      className={`h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-scroll transition-all duration-500 ease-in-out ${
+        isOpen ? "w-full" : "w-0"
       }`}
     >
       <button
@@ -68,13 +75,17 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
               <img src={product.image} alt="product" className="w-10 h-10" />
 
               <p>
-                {product.count}
+                <span className="text-red-500 text-lg">{product.count}</span>
+
                 {product.title}
               </p>
-              <p>${product.price}</p>
+              <p className="font-bold">${product.price}</p>
+              <button onClick={() => deleteProduct(product)}>
+                <RemoveSvg />
+              </button>
             </li>
           ))}
-          <button onClick={handleClick}>Order</button>
+          <button onClick={handleClick}></button>
         </ul>
       ) : (
         <div className="text-white flex justify-center">Nothing selected</div>
