@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ProductType } from "../../types";
 import { api } from "../../api";
 import { LoadingSvg } from "../../svg";
-import { Basket } from "../Basket";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../store/slice/productSlice";
 export const ProductCarts = () => {
@@ -12,7 +11,6 @@ export const ProductCarts = () => {
 
   const handleClick = (item: ProductType) => {
     dispatch(addProduct(item));
-    console.log();
   };
 
   useEffect(() => {
@@ -56,7 +54,7 @@ export const ProductCarts = () => {
                   <p>{item.category}</p>
                   <button
                     onClick={() => handleClick(item)}
-                    className="bg-gray-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer"
+                    className="bg-blue-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer text-white"
                   >
                     Add to cart
                   </button>
