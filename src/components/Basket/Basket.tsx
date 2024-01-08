@@ -11,6 +11,7 @@ export const Basket = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen((prevState) => !prevState);
+    
   };
 
   const selectedProduct = useSelector((state:RootState) => state.product.values)
@@ -20,15 +21,14 @@ export const Basket = () => {
         {selectedProduct.length}
       </span>
       <div onClick={handleClick}>
-        <BasketSvg />
+        <BasketSvg
+          width={50}
+          height={50}
+          className="border-2 border-lightgray rounded-md p-1"
+        />
       </div>
 
-      {isOpen && (
-        <BasketWithProducts
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-        />
-      )}
+      {isOpen && <BasketWithProducts setIsOpen={setIsOpen} isOpen={isOpen} />}
     </div>
   );
 };

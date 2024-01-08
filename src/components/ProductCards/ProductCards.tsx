@@ -54,7 +54,7 @@ export const ProductCarts = () => {
                   <p>{item.category}</p>
                   <button
                     onClick={() => handleClick(item)}
-                    className="bg-gray-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer"
+                    className="bg-blue-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer text-white"
                   >
                     Add to cart
                   </button>
