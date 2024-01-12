@@ -8,10 +8,12 @@ export const NavBar = () => {
     { id:3,name: "services" },
   ];
   return (
-    <nav className="bg-blue-400 text-white rounded-md w-full flex justify-around items-center px-10">
+    <nav className="bg-blue-400 text-white bg-opacity-50 rounded-md w-full flex justify-around items-center px-10 fixed top-0 left-0 backdrop-filter backdrop-blur-md">
       <LogoSvg />
       {navItems.map((item) => (
-        <Link key={item.id} to={`/${item.name}`} className="uppercase">{item.name}</Link>
+        <Link key={item.id} to={`/${item.name}`} className="uppercase">
+          {item.name}
+        </Link>
       ))}
     </nav>
   );

@@ -1,4 +1,4 @@
-import { ProductType } from "../../types";
+import { ProductType,BasketPropsType } from "../../types";
 import { BasketSvg, CloseSvg } from "../../svg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,12 +9,10 @@ import {
 } from "../../store/slice/productSlice";
 import { RemoveSvg } from "../../svg/RemoveSvg";
 import { EmptyBasketSvg } from "../../svg/EmptyBasketSvg";
-type BasketProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-};
+import { usePreventYScroll } from "../../hooks/usePerventYScroll";
 
-export const BasketWithProducts: React.FC<BasketProps> = ({
+
+export const BasketWithProducts: React.FC<BasketPropsType> = ({
   setIsOpen,
   isOpen,
 }) => {
@@ -60,18 +58,22 @@ export const BasketWithProducts: React.FC<BasketProps> = ({
     dispatch(removeProduct(product));
   };
 
+  usePreventYScroll(isOpen);
   const closeBtn = () => {
     setIsOpen(!isOpen);
-    document.body.style.overflow = isOpen ? "auto" : "hidden";
   };
 
   return (
-    <div className="w-screen h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-auto">
+    <div
+      className={`w-screen h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-auto animate__animated ${
+        isOpen ? "animate__bounceInRight animate__faster" : "animate__bounceOutRight"
+      }`}
+    >
       <button onClick={closeBtn} className="w-full flex justify-end">
         <CloseSvg />
       </button>
       {gruopedProducts.length ? (
-        <ul className="text-center">
+        <ul className="text-center ">
           {gruopedProducts.map((product, i) => (
             <li
               key={product.id}
@@ -104,7 +106,7 @@ export const BasketWithProducts: React.FC<BasketProps> = ({
           </div>
         </ul>
       ) : (
-        <div className="overflow-y-hidden flex flex-col justify-center items-center">
+        <div className="overflow-hidden flex flex-col justify-center items-center mt-28">
           <EmptyBasketSvg />
           <p className="text-xl">Nothing selected</p>
         </div>

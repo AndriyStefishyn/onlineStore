@@ -4,6 +4,7 @@ import { Basket } from "../../components/Basket";
 export const HomePage = () => {
   return (
     <>
+    
       <NavBar />
       <Basket />
       <ProductCarts />
