@@ -1,20 +1,26 @@
-import { ProductType } from "../../types";
-import { CloseSvg } from "../../svg";
+import { ProductType,BasketPropsType } from "../../types";
+import { BasketSvg, CloseSvg } from "../../svg";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import {
+  clearAllProducts,
+  removeProduct,
+} from "../../store/slice/productSlice";
+import { RemoveSvg } from "../../svg/RemoveSvg";
+import { EmptyBasketSvg } from "../../svg/EmptyBasketSvg";
+import { usePreventYScroll } from "../../hooks/usePerventYScroll";
 
-type BasketProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-};
 
-export const BasketWithProducts: React.FC<BasketProps> = ({
+export const BasketWithProducts: React.FC<BasketPropsType> = ({
   setIsOpen,
   isOpen,
 }) => {
+  const dispatch = useDispatch();
   const [gruopedProducts, setGroupedProducts] = useState<ProductType[]>([]);
-const selectedProduct = useSelector((state:RootState)=>state.product.values)
+  const selectedProduct = useSelector(
+    (state: RootState) => state.product.values
+  );
   useEffect(() => {
     const productsMap: { [key: number]: number } = {};
     selectedProduct.forEach((product) => {
@@ -24,7 +30,6 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
         productsMap[product.id] += 1;
       }
     });
-    console.log(productsMap);
     const usedProductsIds: Array<number> = [];
     const newGroupedProducts = selectedProduct
       .map((product) => {
@@ -32,7 +37,7 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
         return {
           ...product,
           price: product.price * countOfProducts,
-          count: countOfProducts > 1 ? `(${countOfProducts})` : "",
+          count: countOfProducts > 1 ? ` x${countOfProducts} ` : "",
         };
       })
       .filter((product) => {
@@ -44,40 +49,67 @@ const selectedProduct = useSelector((state:RootState)=>state.product.values)
       });
     setGroupedProducts(newGroupedProducts);
   }, [selectedProduct]);
-  const handleClick = () => {};
+  const handleClick = () => {
+    localStorage.setItem("order", JSON.stringify(selectedProduct));
+    dispatch(clearAllProducts());
+  };
+
+  const deleteProduct = (product: ProductType) => {
+    dispatch(removeProduct(product));
+  };
+
+  usePreventYScroll(isOpen);
+  const closeBtn = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div
-      className={`h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-scroll transition-w duration-500 ease-in-out ${
-        isOpen ? "w-[400px]" : "w-0"
+      className={`w-screen h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-y-auto animate__animated ${
+        isOpen ? "animate__bounceInRight animate__faster" : "animate__bounceOutRight"
       }`}
     >
-      <button
-        onClick={() => setIsOpen((prevState) => !prevState)}
-        className="w-full flex justify-end"
-      >
+      <button onClick={closeBtn} className="w-full flex justify-end">
         <CloseSvg />
       </button>
       {gruopedProducts.length ? (
-        <ul>
+        <ul className="text-center ">
           {gruopedProducts.map((product, i) => (
             <li
               key={product.id}
-              className="text-center flex justify-between items-center gap-3 py-5 px-6"
+              className=" text-center  flex justify-between items-center gap-3 mt-4 py-5 px-6 rounded-lg border border-solid border-gray-400"
             >
-              <img src={product.image} alt="product" className="w-10 h-10" />
+              <div>
+                <img src={product.image} alt="product" className="w-10 h-10" />
+                <label htmlFor="product">{product.title}</label>
+              </div>
 
-              <p>
-                {product.count}
-                {product.title}
-              </p>
-              <p>${product.price}</p>
+              <div>
+                <span className="text-red-500 text-lg">{product.count}</span>
+              </div>
+              <div>
+                <button onClick={() => deleteProduct(product)}>
+                  <RemoveSvg />
+                </button>
+                <p className="font-bold">${product.price}</p>
+              </div>
             </li>
           ))}
-          <button onClick={handleClick}>Order</button>
+          <div className="text-center">
+            <button
+              onClick={handleClick}
+              className="bg-blue-400 text-[25px] p-3 my-5 mx-auto rounded-md  text-white w-40 flex justify-center gap-4 items-center"
+            >
+              <BasketSvg width={25} height={25} />
+              BUY
+            </button>
+          </div>
         </ul>
       ) : (
-        <div className="text-white flex justify-center">Nothing selected</div>
+        <div className="overflow-hidden flex flex-col justify-center items-center mt-28">
+          <EmptyBasketSvg />
+          <p className="text-xl">Nothing selected</p>
+        </div>
       )}
     </div>
   );

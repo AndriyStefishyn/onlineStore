@@ -2,18 +2,11 @@ import { useState, useEffect } from "react";
 import { ProductType } from "../../types";
 import { api } from "../../api";
 import { LoadingSvg } from "../../svg";
-import { Basket } from "../Basket";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../store/slice/productSlice";
+import { Product } from "./Prodcut";
+
 export const ProductCarts = () => {
   const [data, setData] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  const handleClick = (item: ProductType) => {
-    dispatch(addProduct(item));
-    console.log();
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,43 +22,5 @@ export const ProductCarts = () => {
 
     fetchData();
   }, []);
-  return (
-    <div>
-      {loading ? (
-        <LoadingSvg />
-      ) : (
-        <>
-          
-          <ul className="grid grid-cols-4 gap-5 px-28">
-            {data.map((item) => (
-              <li
-                key={item.id}
-                className=" border-2 border-gray-300 rounded-md overflow-y-hidden p-5 flex flex-col justify-between items-center"
-              >
-                <div className=" h-[50%]">
-                  <img
-                    src={item.image}
-                    alt="product"
-                    className=" object-contain  h-full mb-10"
-                  />
-                </div>
-
-                <div className="w-full">
-                  <p>{item.title}</p>
-                  <p className="font-bold">${item.price}</p>
-                  <p>{item.category}</p>
-                  <button
-                    onClick={() => handleClick(item)}
-                    className="bg-gray-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer"
-                  >
-                    Add to cart
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  );
+  return <div className="overflow-hidden pt-20">{loading ? <LoadingSvg /> : <Product data={data} />}</div>;
 };
