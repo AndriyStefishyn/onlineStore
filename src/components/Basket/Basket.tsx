@@ -22,7 +22,7 @@ export const Basket = () => {
         <BasketSvg
           width={50}
           height={50}
-          className=" p-1 animate-pulse cursor-pointer"
+          className=" p-1 cursor-pointer"
         />
       </div>
 
