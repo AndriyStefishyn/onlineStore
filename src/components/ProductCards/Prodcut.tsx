@@ -23,11 +23,11 @@ export const Product: React.FC<{ data: ProductType[] }> = ({ data }) => {
  usePreventYScroll(productWasClicked.wasClicked)
 
   return (
-    <ul className="grid grid-cols-4 gap-5 px-28 overflow-hidden">
+    <ul className="grid grid-cols-4 gap-5 px-28 ">
       {data.map((item) => (
         <li
           key={item.id}
-          className="border-2 border-gray-300 rounded-md overflow-y-hidden p-5 flex flex-col justify-between items-center"
+          className="  p-5 mt-2 flex flex-col justify-between items-center shadow-2xl rounded-lg transition-transform duration-1 hover:scale-105"
         >
           <div
             className="h-[50%]"
@@ -50,7 +50,7 @@ export const Product: React.FC<{ data: ProductType[] }> = ({ data }) => {
             <p>{item.category}</p>
             <button
               onClick={() => handleClick(item)}
-              className="bg-blue-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer text-white"
+              className="bg-blue-400 p-2 font-bold rounded-md mt-5 w-full cursor-pointer text-white hover:bg-blue-500"
             >
               Add to cart
             </button>

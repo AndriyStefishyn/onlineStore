@@ -15,11 +15,11 @@ export const ZoomedCard: React.FC<ZoomedCardProps> = ({
       }
       onClick={onClose}
     >
-      <div className="w-[25%] h-[60%] flex justify-center items-center cursor-default  rounded-lg">
+      <div className="w-[25%] h-[60%] flex justify-center items-center cursor-default ">
         <img
           src={selectedCard.product?.image}
           alt="img"
-          className="w-full h-full  object-cobver animate__animated animate__fadeIn"
+          className="w-full h-full rounded-md  object-cobver animate__animated animate__fadeIn"
         />
       </div>
     </div>
