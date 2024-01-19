@@ -23,7 +23,7 @@ export const Product: React.FC<{ data: ProductType[] }> = ({ data }) => {
  usePreventYScroll(productWasClicked.wasClicked)
 
   return (
-    <ul className="grid grid-cols-4 gap-5 px-28 ">
+    <ul className="grid grid-cols-4 gap-5 px-28 mb-24 ">
       {data.map((item) => (
         <li
           key={item.id}

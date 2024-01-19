@@ -15,7 +15,6 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
 }) => {
   const dispatch = useDispatch();
   const [groupedProducts, setGroupedProducts] = useState<ProductType[]>([]);
-  const [wasDeleted, setWasDeleted] = useState("");
   const selectedProduct = useSelector(
     (state: RootState) => state.product.values
   );
@@ -105,7 +104,7 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
                 </div>
               </div>
               <div className="flex flex-col items-center gap-3">
-                <p className="font-bold">${product.price}</p>
+                <p className="font-bold">${product.count?product.price*product.count:product.price}</p>
                 <button
                   onClick={() => deleteProduct(product)}
                   className="hover:scale-110"
