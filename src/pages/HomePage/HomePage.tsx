@@ -5,10 +5,9 @@ import { SearchInput } from "../../components/Input/SearchInput";
 export const HomePage = () => {
   return (
     <>
-    
       <NavBar />
-      <SearchInput/>
       <Basket />
+      <SearchInput />
       <ProductCarts />
     </>
   );

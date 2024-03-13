@@ -15,7 +15,7 @@ export const Basket = () => {
   );
   return (
     <div className=" flex justify-end sticky top-0 p-4 ">
-      <span className="block w-6 h-6 bg-black text-center text-white rounded-md">
+      <span className="block w-6 h-6 bg-light-brown  text-center text-white rounded-md">
         {selectedProduct.length}
       </span>
       <div onClick={handleClick}>
@@ -23,6 +23,7 @@ export const Basket = () => {
           width={50}
           height={50}
           className=" p-1 cursor-pointer"
+          fill="rgb(210,180,140)"
         />
       </div>
 

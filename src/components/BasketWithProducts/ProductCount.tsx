@@ -12,7 +12,7 @@ export const ProductCount: React.FC<ProductCountProps> = ({
     setGroupedProducts(updatedProductsCount);
   };
   return (
-    <div className="text-xl">
+    <div className="text-xl text-light-brown">
       <span>Amount : </span>
       <button
         className=" w-7 text-2xl"
@@ -27,7 +27,7 @@ export const ProductCount: React.FC<ProductCountProps> = ({
       >
         -
       </button>
-      <span className="w-9 inline-block text-center text-blue-500 bg-blue-200 py-1  rounded-md text-2xl  select-none">
+      <span className="w-9 inline-block text-center text-white bg-light-brown py-1  rounded-md text-2xl  select-none">
         {product.count}
       </span>
       <button

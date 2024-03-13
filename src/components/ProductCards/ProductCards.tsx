@@ -1,26 +1,22 @@
-import { useState, useEffect } from "react";
-import { ProductType } from "../../types";
-import { api } from "../../api";
+import { useEffect } from "react";
 import { LoadingSvg } from "../../svg";
 import { Product } from "./Prodcut";
-
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store";
+import { fetchProducts } from "../../store/slice/productSlice";
 export const ProductCarts = () => {
-  const [data, setData] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { products, isLoading } = useSelector(
+    (state: RootState) => state.product
+  );
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/products");
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    dispatch(fetchProducts());
+  }, [dispatch,isLoading]);
 
-    fetchData();
-  }, []);
-  return <div className="overflow-hidden pt-20">{loading ? <LoadingSvg /> : <Product data={data} />}</div>;
+  return (
+    <div className="overflow-hidden pt-20">
+      {isLoading ? <LoadingSvg /> : <Product data={products} />}
+    </div>
+  );
 };

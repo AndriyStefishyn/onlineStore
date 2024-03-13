@@ -64,7 +64,6 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
 
   const deleteProduct = (product: ProductType) => {
     dispatch(removeProduct(product));
-
   };
 
   usePreventYScroll(isOpen);
@@ -75,7 +74,7 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
 
   return (
     <div
-      className={`w-screen h-screen absolute top-0 right-0 bg-blue-200 p-5 rounded-md overflow-auto animate__animated ${
+      className={`w-screen h-screen absolute top-0 z-100 right-0 bg-white p-5 rounded-md overflow-auto animate__animated ${
         isOpen
           ? "animate__slideInRight animate__faster"
           : "animate__backOutRight animate-faster"
@@ -89,7 +88,7 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
           {groupedProducts.map((product) => (
             <li
               key={product.id}
-              className="text-left bg-white  flex justify-between items-center gap-3 mt-4 py-5 px-6 rounded-lg shadow-xl "
+              className="text-left text-light-brown bg-white  flex justify-between items-center gap-3 mt-4 py-5 px-6 rounded-lg shadow-2xl"
             >
               <div className="flex gap-10">
                 <img src={product.image} alt="product" className="w-20 h-20" />
@@ -104,7 +103,12 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
                 </div>
               </div>
               <div className="flex flex-col items-center gap-3">
-                <p className="font-bold">${product.count?product.price*product.count:product.price}</p>
+                <p className="font-bold">
+                  $
+                  {product.count
+                    ? product.price * product.count
+                    : product.price}
+                </p>
                 <button
                   onClick={() => deleteProduct(product)}
                   className="hover:scale-110"
@@ -117,16 +121,18 @@ export const BasketWithProducts: React.FC<BasketPropsType> = ({
           <div className="text-center">
             <button
               onClick={handleClick}
-              className="bg-blue-400 text-[25px] p-3 my-5 mx-auto rounded-md  text-white w-40 flex justify-center gap-4 items-center hover:bg-blue-"
+              className="bg-light-brown  text-[25px] p-3 my-5 mx-auto rounded-md  text-white w-40 flex justify-center gap-4 items-center hover:bg-blue-"
             >
-              <BasketSvg width={25} height={25} />
+              <BasketSvg width={25} height={25} fill="white" />
               BUY
             </button>
           </div>
-          <p className="font-bold text-xl">Total Price: ${totalPrice()}</p>
+          <p className="font-bold text-xl text-light-brown">
+            Total Price: ${totalPrice()}
+          </p>
         </ul>
       ) : (
-        <div className="overflow-hidden flex flex-col justify-center items-center mt-28 animate-pulse">
+        <div className="overflow-hidden  flex flex-col justify-center items-center mt-28 ">
           <EmptyBasketSvg />
           <p className="text-xl">Nothing selected</p>
         </div>

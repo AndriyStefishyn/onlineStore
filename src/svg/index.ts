@@ -1,6 +1,6 @@
-export * from './LogoSvg'
 export * from './BasketSvg'
 export * from './LoadingSvg'
 export * from './CloseSvg'
 export * from './EmptyBasketSvg'
 export * from './RemoveSvg'
+export * from './SearchSvg'

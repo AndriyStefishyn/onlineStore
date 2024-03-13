@@ -2,6 +2,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 /* styles.css */
-@import 'animate.css';
+@import "animate.css";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800&family=Protest+Riot&display=swap");
 
-
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
